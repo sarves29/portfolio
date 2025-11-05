@@ -1,0 +1,40 @@
+[
+  {
+    "model": "site_portfolio.project",
+    "pk": 1,
+    "fields": {
+      "title": "Employment Project (Datasprings)",
+      "short_summary": "Data aggregation and search platform with Django, Neo4j, and RAG-based search.",
+      "long_description": "Built a scalable data aggregation platform, integrated LLM-based RAG, AWS deployments, and advanced scraping.",
+      "tech_list": "Django, Python, Neo4j, AWS, RAG, Selenium",
+      "github_url": "",
+      "demo_url": "",
+      "featured": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "site_portfolio.project",
+    "pk": 2,
+    "fields": {
+      "title": "Web Scraper Automation",
+      "short_summary": "Automated data collection using Selenium and BeautifulSoup.",
+      "long_description": "Designed pipelines for scraping large datasets with cleaning and scheduling.",
+      "tech_list": "Python, Selenium, BeautifulSoup, AWS S3",
+      "featured": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "site_portfolio.project",
+    "pk": 3,
+    "fields": {
+      "title": "AI-Powered Integration",
+      "short_summary": "RAG workflows, LLM integration and vector store powered features.",
+      "long_description": "Integrated AWS Bedrock and vector stores to enable semantic retrieval across datasets.",
+      "tech_list": "LLMs, AWS Bedrock, Vector DBs, Python",
+      "featured": false,
+      "order": 3
+    }
+  }
+]

@@ -1,0 +1,10 @@
+{% extends 'site_portfolio/base.html' %}
+{% block content %}
+<div class="container">
+  <h2>{{ project.title }}</h2>
+  <p>{{ project.long_description }}</p>
+  <p>Tech: {% for t in project.tech_tags %} <strong>{{ t }}</strong>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  {% if project.github_url %}<p><a href="{{ project.github_url }}" target="_blank">GitHub</a></p>{% endif %}
+  {% if project.demo_url %}<p><a href="{{ project.demo_url }}" target="_blank">Live demo</a></p>{% endif %}
+</div>
+{% endblock %}

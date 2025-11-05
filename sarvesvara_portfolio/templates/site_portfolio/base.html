@@ -1,0 +1,70 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sarvesvara Ramar — Portfolio</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap CSS -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+      crossorigin="anonymous"
+    >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'site_portfolio/css/styles.css' %}">
+  </head>
+
+  <body class="relative text-gray-100 antialiased bg-black">
+
+    <!-- Header -->
+    <header class="fixed w-full z-30 bg-transparent backdrop-blur-sm border-b border-gray-800">
+      <nav class="mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <a href="/" class="text-2xl font-semibold text-cyan-400 hover:text-cyan-300 transition">Sarvesvara Ramar</a>
+
+        <div class="space-x-4 hidden md:flex items-center">
+          <a href="/#projects" class="hover:text-cyan-400 transition">Projects</a>
+          <a href="/#about" class="hover:text-cyan-400 transition">About</a>
+          <a href="{% url 'site_portfolio:contact' %}" class="hover:text-cyan-400 transition">Contact</a>
+          <a href="{% url 'site_portfolio:download_resume' %}" 
+             class="px-3 py-1 border border-cyan-400 rounded hover:bg-cyan-400 hover:text-black transition">
+            Resume
+          </a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden">
+          <button id="menu-btn" aria-label="Open Menu" class="text-cyan-400 text-2xl">☰</button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 relative z-10">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-8 border-t border-gray-800 relative z-10">
+      <div class="max-w-6xl mx-auto px-4 text-center text-sm text-gray-400">
+        © {{ now|date:'Y' }} Sarvesvara Ramar • Built with <span class="text-cyan-400">Django</span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Bundle -->
+    <script 
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+      crossorigin="anonymous">
+    </script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'site_portfolio/js/main.js' %}"></script>
+  </body>
+</html>

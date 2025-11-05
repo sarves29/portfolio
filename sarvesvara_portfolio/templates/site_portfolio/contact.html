@@ -1,0 +1,62 @@
+{% extends 'site_portfolio/base.html' %}
+{% block content %}
+{% load static %}
+
+{% for message in messages %}
+  <div class="max-w-3xl mx-auto mt-6 px-4">
+    <div class="p-4 mb-4 text-sm text-green-800 bg-green-200 rounded-lg" role="alert">
+      {{ message }}
+    </div>
+  </div>
+{% endfor %}
+
+<section class="relative mx-auto px-4 py-20 min-h-screen flex justify-center items-center">
+  <!-- Glass Container -->
+  <div class="relative glass rounded-2xl p-8 md:p-12 max-w-3xl w-full shadow-lg overflow-hidden">
+    <!-- Content Layer -->
+    <div class="relative z-10">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center text-cyan-400">Get in Touch</h2>
+      <p class="text-gray-300 text-center mb-8 max-w-md mx-auto text-sm sm:text-base">
+        Have a question, collaboration idea, or project in mind?  
+        Drop a message and I’ll get back to you soon.
+      </p>
+
+      <!-- Contact Form -->
+      <form method="POST" class="space-y-6">
+        {% csrf_token %}
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Your Name</label>
+          <input type="text" id="name" name="name" required
+                 class="w-full px-4 py-2 rounded-md bg-gray-900/60 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200 placeholder-gray-400">
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Your Email</label>
+          <input type="email" id="email" name="email" required
+                 class="w-full px-4 py-2 rounded-md bg-gray-900/60 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200 placeholder-gray-400">
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+          <textarea id="message" name="message" rows="5" required
+                    class="w-full px-4 py-2 rounded-md bg-gray-900/60 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-gray-200 placeholder-gray-400"></textarea>
+        </div>
+
+        <div class="text-center">
+          <button type="submit"
+                  class="bg-cyan-500 hover:bg-cyan-600 text-black font-semibold px-6 py-2 rounded-md transition">
+            Send Message
+          </button>
+        </div>
+      </form>
+
+      <!-- Contact Info -->
+      <div class="mt-10 text-center">
+        <p class="text-gray-400 text-sm">Or reach me directly:</p>
+        <p class="text-gray-200 font-medium mt-1">📧 sarvesvarasar@gmail.com</p>
+        <p class="text-gray-200 font-medium">📱 +91 95975 19919</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

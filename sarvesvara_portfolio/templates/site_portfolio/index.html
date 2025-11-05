@@ -1,0 +1,114 @@
+{% extends 'site_portfolio/base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Hero Section with Background Video -->
+<div class="relative mx-auto px-4 py-10 mt-5 overflow-hidden justify-center">
+  <!-- Glass container -->
+  <div class="relative glass p-10 mx-auto shadow-lg overflow-hidden" style="max-width: 90%;">
+    <!-- 🎬 Video background (inside the card only) -->
+    <div class="hero-video-bg" style="margin-left: 16%;">
+      <video autoplay loop muted playsinline>
+        <source src="{% static 'site_portfolio/videos/background-video.mp4' %}" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="row items-center">
+      <!-- Left Content -->
+      <div class="col-md-8">
+        <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
+          Hey, I'm <span class="text-cyan-400">Sarvesvara Ramar</span>
+        </h1>
+        <p class="mt-4 text-gray-200 max-w-xl">
+          I build scalable, production-ready web applications using Django and React,
+          integrating cloud and LLM-powered features for smarter systems,
+          with a strong focus on automation, performance, and real-world usability.
+        </p>
+
+        <div class="mt-6 flex gap-3">
+          <a href="{% url 'site_portfolio:download_resume' %}" class="border border-gray-500 px-4 py-2 rounded hover:bg-gray-900 transition">
+            Download Resume
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Profile Image -->
+      <div class="col-md-4 flex items-center justify-content-end mt-10 md:mt-0">
+        <div class="text-center">
+          <div class="w-64">
+            <img src="{% static 'site_portfolio/images/portfolio_image.png' %}" 
+                 alt="Profile Image" 
+                 class="object-cover w-full h-full rounded-2xl">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Down Arrow Button -->
+<div class="flex justify-center" style="margin-top: 7%;">
+    <a href="#projects" class="inline-block text-cyan-400 hover:text-cyan-200 transition flex flex-col items-center">
+      <div class="row">
+        <span class="col-md-9 text-sm mb-1 pe-0">View Projects</span>
+        <div class="col-md-3 ps-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 arrow-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </a>
+  </div>
+<!-- Projects Section -->
+<div id="projects" class="max-w-6xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold mb-6">Selected Projects</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for project in projects %}
+      <article class="bg-gray-900/60 backdrop-blur-md border border-gray-700 p-6 rounded-lg hover:shadow-lg transition">
+        <h3 class="text-xl font-semibold">{{ project.title }}</h3>
+        <p class="mt-3 text-gray-400">{{ project.short_summary }}</p>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          {% for tag in project.tech_tags %}
+            <span class="text-xs bg-gray-800 px-2 py-1 rounded">{{ tag }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="mt-4">
+          <a href="{% url 'site_portfolio:project_detail' project.slug %}" class="text-cyan-400 hover:underline">Read more →</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- About Section -->
+<div id="about" class="max-w-6xl mx-auto px-4 py-12">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+    <div class="md:col-span-2">
+      <h2 class="text-2xl font-bold">About Me</h2>
+      <p class="mt-4 text-gray-300">
+        I’m a results-driven Python Full-Stack Developer specializing in building scalable web applications with Django and React.
+        I integrate AI, automation, and cloud to deliver production-ready systems.
+      </p>
+
+      <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-300">
+        <li>Python, Django, Flask</li>
+        <li>React, JavaScript, AJAX</li>
+        <li>MySQL, PostgreSQL, Neo4j</li>
+        <li>AWS (EC2, S3, Lambda, Bedrock)</li>
+      </ul>
+    </div>
+
+    <div class="p-6 bg-gray-900/60 backdrop-blur-md border border-gray-700 rounded-lg">
+      <h3 class="font-semibold">Contact</h3>
+      <p class="text-gray-400 mt-2">Email: sarvesvarasar@gmail.com</p>
+      <p class="text-gray-400">Phone: +91 95975 19919</p>
+      <div class="mt-4">
+        <a href="{% url 'site_portfolio:contact' %}" class="inline-block bg-cyan-500 px-3 py-2 rounded text-black font-semibold hover:bg-cyan-400">
+          Send a message
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
