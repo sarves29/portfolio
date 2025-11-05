@@ -3,3 +3,4 @@ pillow
 gunicorn
 whitenoise
 django-crispy-forms
+python-dotenv
