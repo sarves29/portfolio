@@ -7,7 +7,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'replace-me-with-a-secure-key'
 load_dotenv(BASE_DIR / ".env") 
 DEBUG = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'sarvesvara-portfolio.up.railway.app']
+
+# SECURITY
+CSRF_TRUSTED_ORIGINS = [
+    "https://sarvesvara-portfolio-production.up.railway.app",
+    "https://sarvesvara-portfolio.up.railway.app",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
