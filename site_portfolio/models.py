@@ -29,6 +29,7 @@ class Project(models.Model):
 class Resume(models.Model):
     title = models.CharField(max_length=200)
     file = models.FileField(upload_to='resumes/')
+    processed = models.BooleanField(default=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

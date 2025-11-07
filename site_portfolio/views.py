@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse, Http404
-from django.core.mail import send_mail, BadHeaderError
-from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from django.contrib import messages
+import os
+import threading
 from django.shortcuts import redirect
 from .models import Project, Resume
 
@@ -11,46 +13,52 @@ def index(request):
     return render(request, 'site_portfolio/index.html', {'projects': projects})
 
 def project_detail(request, slug):
-    projects = get_object_or_404(Project, slug=slug)
-    return render(request, 'site_portfolio/project_detail.html', {'projects': projects})
+    project = get_object_or_404(Project, slug=slug)
+    return render(request, 'site_portfolio/project_detail.html', {'project': project})
+
+def send_email_async(message):
+    try:
+        sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+        response = sg.send(message)
+        print(f"✅ Email sent: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Error sending email: {e}")
 
 def contact(request):
-    if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        email = request.POST.get('email', '').strip()
-        message = request.POST.get('message', '').strip()
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
+        message = request.POST.get("message", "").strip()
 
-        # Basic validation
         if not name or not email or not message:
-            messages.error(request, "All fields are required.")
-            return redirect('site_portfolio:contact')
+            messages.error(request, "⚠️ Please fill out all fields.")
+            return redirect("site_portfolio:contact")
 
-        subject = f"Portfolio Contact: Message from {name}"
-        full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        subject = f"Portfolio Contact: {name}"
+        html_content = f"""
+            <h2>New Message from Portfolio</h2>
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Message:</strong><br>{message}</p>
+        """
 
         try:
-            send_mail(
+            mail = Mail(
+                from_email="sarvesvararamar.work@gmail.com",
+                to_emails="sarvesvarasar@gmail.com",
                 subject=subject,
-                message=full_message,
-                from_email=settings.DEFAULT_FROM_EMAIL,  # Your site email
-                recipient_list=[settings.DEFAULT_FROM_EMAIL],  # Goes to you
-                fail_silently=False,
+                html_content=html_content,
             )
-            messages.success(request, "Thank you for reaching out! Your message has been sent successfully.")
-            return redirect('site_portfolio:contact')
 
-        except BadHeaderError:
-            messages.error(request, "Invalid header found.")
-            return redirect('site_portfolio:contact')
-
+            threading.Thread(target=send_email_async, args=(mail,)).start()
+            messages.success(request, "✅ Your message has been sent successfully!")
         except Exception as e:
-            print("Error sending contact email:", e)
-            messages.error(request, "Something went wrong. Please try again later.")
-            return redirect('site_portfolio:contact')
+            messages.error(request, f"❌ Error preparing contact email: {e}")
 
-    # GET request — just render the contact form
-    return render(request, 'site_portfolio/contact.html')
+        return redirect("site_portfolio:contact")
 
+    return render(request, "site_portfolio/contact.html")
+    
 def download_resume(request):
     latest_resume = Resume.objects.order_by('-uploaded_at').first()
     if not latest_resume:
